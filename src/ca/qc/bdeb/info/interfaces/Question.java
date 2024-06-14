@@ -11,20 +11,26 @@ public abstract class Question extends JComponent {
     static final int HAUTEUR_QUESTION = 25;
     static final int LARGEUR_QUESTION = 200;
 
+    /**
+     * Panneau contenant les composants de la question.
+     */
     private final JPanel panneau = new JPanel(new GridLayout(1, 2));
-    private final JLabel lblLibelle;
 
     /**
      * @param libelle Libellé de la question.
      */
-    public Question(final String libelle) {
+    protected Question(final String libelle) {
         this.add(panneau);
 
-        this.lblLibelle = new JLabel(libelle);
-        panneau.add(lblLibelle);
+        panneau.add(new JLabel(libelle));
 
-        panneau.setSize(FenetreSurMesure.LARGEUR_PANNEAU, Question.HAUTEUR_QUESTION);
+        panneau.setSize(InterfaceSurMesure.LARGEUR_PANNEAU, Question.HAUTEUR_QUESTION);
         panneau.setMinimumSize(new Dimension(Question.LARGEUR_QUESTION, Question.HAUTEUR_QUESTION));
+        panneau.setPreferredSize(new Dimension(InterfaceSurMesure.LARGEUR_PANNEAU, Question.HAUTEUR_QUESTION));
+
+        this.setSize(InterfaceSurMesure.LARGEUR_PANNEAU, Question.HAUTEUR_QUESTION);
+        this.setMinimumSize(new Dimension(Question.LARGEUR_QUESTION, Question.HAUTEUR_QUESTION));
+        this.setPreferredSize(new Dimension(InterfaceSurMesure.LARGEUR_PANNEAU, Question.HAUTEUR_QUESTION));
     }
 
     /**

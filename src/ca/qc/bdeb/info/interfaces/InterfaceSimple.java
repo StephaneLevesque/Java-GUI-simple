@@ -7,7 +7,7 @@ import javax.swing.*;
  *
  * @author Stéphane Lévesque
  */
-public class InterfaceUsager {
+public class InterfaceSimple {
     /**
      * Affiche un message d'information à l'usager.
      *

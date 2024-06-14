@@ -7,16 +7,14 @@ import javax.swing.*;
  * @author Stéphane Lévesque
  */
 public class QuestionTexte extends Question {
-    private final JTextField champTexte;
+    private final JTextField champTexte = new JTextField(20);
 
     /**
      * @param libelle Libellé de la question.
      */
     public QuestionTexte(final String libelle) {
         super(libelle);
-        champTexte = new JTextField(20);
         champTexte.setSize(Question.LARGEUR_QUESTION, Question.HAUTEUR_QUESTION);
-
         ajouterComposantQuestion(champTexte);
     }
 

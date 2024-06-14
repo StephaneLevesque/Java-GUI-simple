@@ -17,6 +17,13 @@ public class ContenuImage extends Contenu {
      */
     public ContenuImage(final String cheminImage) {
         image = Toolkit.getDefaultToolkit().getImage(cheminImage);
+        while (image.getWidth(null) == -1) { // Attendre que l'image soit chargée
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         this.setSize(image.getWidth(null), image.getHeight(null));
         this.setMinimumSize(new Dimension(image.getWidth(null), image.getHeight(null)));
         this.setPreferredSize(new Dimension(image.getWidth(null), image.getHeight(null)));

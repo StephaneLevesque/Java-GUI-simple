@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Stéphane Lévesque
  */
-public class FenetreSurMesure {
+public class InterfaceSurMesure {
     static final int LARGEUR_PANNEAU = 500;
     /**
      * Fenêtre du questionnaire.
@@ -19,39 +19,72 @@ public class FenetreSurMesure {
     /**
      * Panneau contenant les questions.
      */
-    private final JPanel panneau;
+    private final JPanel panneau = new JPanel(new GridBagLayout());
+    /**
+     * Bouton pour envoyer les réponses du questionnaire.
+     */
     private final JButton btnTermine = new JButton("Terminé");
-    private boolean termine;
-
+    /**
+     * Contraintes pour le positionnement des composants.
+     */
+    private GridBagConstraints contraintes = new GridBagConstraints();
+    /**
+     * Indicateur pour que le thread principal attende la fin du questionnaire.
+     */
+    private boolean termine = false;
+    /**
+     * Liste des questions du questionnaire.
+     */
     private final List<Question> questions = new ArrayList<>();
 
-    public FenetreSurMesure(final String titre, final int hauteur, final int largeur) {
+    /**
+     * Constructeur de l'interface sur mesure.
+     * @param titre   Titre de la fenêtre.
+     */
+    public InterfaceSurMesure(final String titre) {
         fenetre = new JFrame(titre);
         fenetre.setIconImage(new ImageIcon("bdeb.png").getImage());
-        panneau = new JPanel();
-        panneau.setLayout(new GridLayout(0, 1, 10, 10));
+
+        contraintes.gridx = 0;
+        contraintes.gridy = 0;
+        contraintes.fill = GridBagConstraints.HORIZONTAL;
+        contraintes.insets = new Insets(10, 10, 10, 10);
+
         fenetre.add(panneau);
         fenetre.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 
-        btnTermine.addActionListener(e -> {
-            termine = true;
-        });
+        btnTermine.addActionListener(e -> termine = true);
 
-        fenetre.setSize(largeur, hauteur);
     }
 
+    /**
+     * Ajoute une question à l'interface.
+     *
+     * @param question Question à ajouter.
+     */
     public void ajouterQuestion(final Question question) {
         questions.add(question);
-        panneau.add(question);
+        panneau.add(question, contraintes);
+        contraintes.gridy++;
     }
 
+    /**
+     * Ajoute un contenu à l'interface.
+     * @param contenu Contenu à ajouter.
+     */
     public void ajouterContenu(final Contenu contenu) {
-        panneau.add(contenu);
+        panneau.add(contenu,contraintes);
+        contraintes.gridy++;
     }
 
+    /**
+     * Affiche l'interface et attend que l'usager termine.
+     *
+     * @return Les réponses aux questions.
+     */
     public String[] afficherInterface() {
-        panneau.add(btnTermine);
-
+        panneau.add(btnTermine,contraintes);
+        fenetre.pack();
         fenetre.setVisible(true);
 
         while (!termine) {
